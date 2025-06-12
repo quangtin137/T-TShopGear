@@ -1,0 +1,202 @@
+﻿:root {
+    --primary-color: #d0021b;
+    --hover-color: #cc0000;
+    --text-muted: #e0e0e0;
+    --dark-color: #212529;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* ===== HEADER ===== */
+.bg-danger {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff !important;
+}
+
+    .navbar-brand:hover {
+        color: var(--hover-color) !important;
+    }
+
+.form-control {
+    border-radius: 20px 0 0 20px;
+    border-right: none;
+}
+
+.btn-outline-light {
+    border-radius: 0 20px 20px 0;
+    font-weight: 500;
+}
+
+.btn-danger {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+    .btn-danger:hover {
+        background-color: var(--hover-color);
+        border-color: var(--hover-color);
+    }
+
+/* ===== SECONDARY NAVIGATION ===== */
+.nav-secondary {
+    background-color: var(--dark-color);
+    color: white;
+    font-size: 0.9rem;
+}
+
+    .nav-secondary a {
+        color: white;
+        text-decoration: none;
+        margin-right: 1rem;
+    }
+
+        .nav-secondary a:hover {
+            color: var(--primary-color);
+        }
+
+    .nav-secondary i {
+        margin-right: 0.3rem;
+    }
+
+/* ===== CATEGORY NAVIGATION ===== */
+.nav-categories .category-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+    .nav-categories .category-link i {
+        margin-right: 0.5rem;
+    }
+
+    .nav-categories .category-link:hover {
+        background-color: var(--hover-color);
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+/* ===== CHAT BUTTONS ===== */
+.chat-buttons-container {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-btn {
+    background-color: white;
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: #333;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+    .chat-btn i {
+        font-size: 1.6rem;
+        margin-bottom: 5px;
+    }
+
+    .chat-btn:hover {
+        transform: translateX(-5px);
+        border: 2px solid var(--primary-color);
+    }
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 3rem 0 1rem;
+    font-size: 0.9rem;
+}
+
+    footer h5 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    footer a {
+        color: #e0e0e0; /* Màu sáng hơn để nổi bật trên nền tối */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+    footer .social-links a {
+        font-size: 1.4rem;
+        margin-right: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+        footer .social-links a:hover {
+            transform: translateY(-3px);
+            color: var(--primary-color);
+        }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .nav-secondary .nav-center {
+        display: none;
+    }
+
+    .chat-buttons-container {
+        flex-direction: row;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .chat-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 0.6rem;
+        padding: 5px;
+    }
+
+        .chat-btn i {
+            font-size: 1.2rem;
+        }
+
+        .chat-btn span,
+        .chat-btn small {
+            display: none;
+        }
+
+    footer h5 {
+        font-size: 1rem;
+    }
+}

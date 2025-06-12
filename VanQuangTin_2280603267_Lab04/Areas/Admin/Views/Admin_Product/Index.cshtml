@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VanQuangTin_2280603267_Lab04.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-index.css" />
+}
+
+<p>
+    <a class="btn btn-primary mb-3" asp-action="Create">Thêm sản phẩm mới</a>
+</p>
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border border-secondary">
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="object-fit: cover; height: 200px;" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text text-danger fw-bold">Giá: @item.Price.ToString("N0")₫</p>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
+
+                        <div class="mt-auto">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Sửa</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Chi tiết</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
