@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using VanQuangTin_2280603267_Lab04.Areas.Admin.Models;
 using VanQuangTin_2280603267_Lab04.Models;
 using VanQuangTin_2280603267_Lab04.Repositories;
 
 namespace VanQuangTin_2280603267_Lab04.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class Admin_CategoriesController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
