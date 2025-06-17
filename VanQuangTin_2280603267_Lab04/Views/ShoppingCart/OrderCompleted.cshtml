@@ -1,0 +1,23 @@
+﻿@model VanQuangTin_2280603267_Lab04.Models.Order
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/OrderCompleted.css" asp-append-version="true" />
+}
+
+<div class="order-completed-container">
+    <h2>Đặt hàng thành công!</h2>
+
+    <div class="order-completed-details">
+        <p><strong>Mã đơn hàng:</strong> @Model.Id</p>
+        <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Địa chỉ giao hàng:</strong> @Model.ShippingAddress</p>
+        <p><strong>Tổng tiền:</strong> @Model.TotalPrice.ToString("N0") ₫</p>
+        <p><strong>Giảm giá:</strong> @Model.Discount.ToString("N0") ₫</p>
+        <p><strong>Phải thanh toán:</strong> <span class="order-completed-text-success">@Model.FinalAmount.ToString("N0") ₫</span></p>
+    </div>
+
+    <a href="@Url.Action("Index","Home")" class="order-completed-btn order-completed-btn-primary">Tiếp tục mua sắm</a>
+</div>

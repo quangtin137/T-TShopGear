@@ -1,0 +1,37 @@
+﻿@model VanQuangTin_2280603267_Lab04.Models.Order
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Checkout.css" asp-append-version="true" />
+}
+
+<div class="checkout-container">
+    <h2>Thanh toán</h2>
+
+    <!-- Hiển thị lỗi validation -->
+    @Html.ValidationSummary(true, "", new { @class = "checkout-text-danger" })
+
+    <form asp-action="Checkout" method="post">
+        <div class="checkout-form-group">
+            <label asp-for="ShippingAddress">Địa chỉ giao hàng</label>
+            <input asp-for="ShippingAddress" class="checkout-form-control" />
+            <span asp-validation-for="ShippingAddress" class="checkout-text-danger"></span>
+        </div>
+
+        <div class="checkout-form-group">
+            <label asp-for="Notes">Ghi chú</label>
+            <textarea asp-for="Notes" class="checkout-form-control"></textarea>
+            <span asp-validation-for="Notes" class="checkout-text-danger"></span>
+        </div>
+
+        <button type="submit" class="checkout-btn checkout-btn-primary">Đặt hàng</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}
