@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VanQuangTin_2280603267_Lab04.Models;
 using VanQuangTin_2280603267_Lab04.Repositories;
@@ -11,25 +11,27 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
-
+// ✅ Dùng AddIdentity (có hỗ trợ Role)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages();
 
-
+// Repositories
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 
-builder.Services.ConfigureApplicationCookie(option =>
+// Cookie settings
+builder.Services.ConfigureApplicationCookie(options =>
 {
-    option.LoginPath = $"/Identity/Account/Login";
-    option.LoginPath = $"/Identity/Account/Logout";
-    option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -37,6 +39,16 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+// ✅ Google Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        googleOptions.CallbackPath = "/signin-google";
+    });
+
 
 var app = builder.Build();
 
@@ -47,29 +59,23 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseSession();
-
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
-app.UseEndpoints(enpoints =>
+// Endpoints
+app.UseEndpoints(endpoints =>
 {
-    enpoints.MapControllerRoute(
+    endpoints.MapControllerRoute(
         name: "Admin",
-        pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}");
-    enpoints.MapControllerRoute(
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}"
-//    );
 
 app.MapRazorPages();
 app.Run();
