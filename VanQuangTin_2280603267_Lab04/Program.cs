@@ -46,6 +46,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
+
 app.UseSession();
 
 app.UseStaticFiles();
