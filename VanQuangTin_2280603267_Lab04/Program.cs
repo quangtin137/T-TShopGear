@@ -17,6 +17,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
 builder.Services.AddRazorPages();
 
 // Repositories
