@@ -8,6 +8,7 @@ namespace VanQuangTin_2280603267_Lab04.Models
         public int Id { get; set; }
         public string UserId { get; set; }
         public DateTime OrderDate { get; set; }
+        public OrderStatus Status { get; set; } 
         public decimal TotalPrice { get; set; }
         public decimal Discount { get; set; }      // ➕ mới
         public decimal FinalAmount { get; set; }   // ➕ mới

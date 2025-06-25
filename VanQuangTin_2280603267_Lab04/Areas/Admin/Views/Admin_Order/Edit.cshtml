@@ -1,0 +1,28 @@
+﻿@using VanQuangTin_2280603267_Lab04.Models
+@model VanQuangTin_2280603267_Lab04.Models.Order
+
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Edit</h1>
+
+<h4>Order</h4>
+<hr />
+
+    <div class="col-md-4">
+    <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+        <select asp-for="Status" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-control"></select>
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-warning">Cập nhật trạng thái</button>
+    </form>
+    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
