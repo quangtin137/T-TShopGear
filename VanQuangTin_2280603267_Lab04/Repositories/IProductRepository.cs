@@ -9,5 +9,6 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+        Task<List<Product>> SearchByNameAsync(string keyword);
     }
 }

@@ -17,64 +17,72 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="register-text-danger" role="alert"></div>
                 <div class="register-form-group">
-                    <input asp-for="Input.FullName" class="register-form-control" autocomplete="fullname" aria-required="true" placeholder="Họ và tên" />
-                    <label asp-for="Input.FullName" class="register-form-label">Họ và tên</label>
+                    <label asp-for="Input.FullName" class="register-form-label">Tên đăng nhập</label>
+                    <input asp-for="Input.FullName" class="register-form-control" autocomplete="fullname" aria-required="true" placeholder="name@example.com" />
                     <span asp-validation-for="Input.FullName" class="register-text-danger"></span>
                 </div>
                 <div class="register-form-group">
-                    <input asp-for="Input.Email" class="register-form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                     <label asp-for="Input.Email" class="register-form-label">Email</label>
+                    <input asp-for="Input.Email" class="register-form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                     <span asp-validation-for="Input.Email" class="register-text-danger"></span>
                 </div>
                 <div class="register-form-group">
-                    <input asp-for="Input.Password" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
                     <label asp-for="Input.Password" class="register-form-label">Mật khẩu</label>
+                    <input asp-for="Input.Password" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
                     <span asp-validation-for="Input.Password" class="register-text-danger"></span>
                 </div>
                 <div class="register-form-group">
-                    <input asp-for="Input.ConfirmPassword" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Xác nhận mật khẩu" />
                     <label asp-for="Input.ConfirmPassword" class="register-form-label">Xác nhận mật khẩu</label>
+                    <input asp-for="Input.ConfirmPassword" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Xác nhận mật khẩu" />
                     <span asp-validation-for="Input.ConfirmPassword" class="register-text-danger"></span>
                 </div>
                 <div class="register-form-group">
+                    <label asp-for="Input.Role" class="register-form-label">Vai trò</label>
                     <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="register-form-control">
                         <option disabled selected>--Chọn vai trò--</option>
                     </select>
-                    <label asp-for="Input.Role" class="register-form-label">Vai trò</label>
                     <span asp-validation-for="Input.Role" class="register-text-danger"></span>
                 </div>
                 <button id="registerSubmit" type="submit" class="register-btn register-btn-primary">Đăng ký</button>
-            </form>
-        </div>
-        <div class="register-col-md-6 register-col-md-offset-2">
-            <section>
-                <h3>Đăng ký bằng dịch vụ khác</h3>
-                <hr />
-                @if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            Hiện chưa có dịch vụ xác thực bên ngoài nào được cấu hình. Xem <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                bài viết này
-                                về cách thiết lập ứng dụng ASP.NET để hỗ trợ đăng ký qua dịch vụ bên ngoài
-                            </a>.
-                        </p>
+
+                <!-- External Login Section -->
+                <section>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <div class="border-bottom flex-1"></div>
+                        <div class="text-nowrap text-muted px-2">Hoặc, đăng ký bằng phương thức khác</div>
+                        <div class="border-bottom flex-1"></div>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form-horizontal">
+
+                    @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                Hiện chưa có dịch vụ xác thực bên ngoài nào được cấu hình. Xem <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                    bài viết này
+                                    về cách thiết lập ứng dụng ASP.NET để hỗ trợ đăng ký qua dịch vụ bên ngoài
+                                </a>.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
                         <div>
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="register-btn register-btn-primary" name="provider" value="@provider.Name" title="Đăng ký bằng tài khoản @provider.DisplayName">@provider.DisplayName</button>
+                                    <button type="submit" asp-page="./ExternalLogin" name="provider" value="@provider.Name" class="register-btn register-btn-primary" title="Đăng ký bằng tài khoản @provider.DisplayName">
+                                        @if (provider.Name == "Google")
+                                        {
+                                            <img src="https://www.google.com/favicon.ico" alt="Google Logo" class="google-logo" /> <!-- Replace with actual Google logo path -->
+                                        }
+                                        @provider.DisplayName
+                                    </button>
                                 }
                             </p>
                         </div>
-                    </form>
-                }
-            </section>
+                    }
+                </section>
+            </form>
         </div>
     </div>
 </div>

@@ -1,0 +1,67 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Register.css" asp-append-version="true" />
+}
+
+<div class="register-container">
+    <h1>@ViewData["Title"]</h1>
+    <div class="register-row">
+        <div class="register-col-md-4">
+            <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form">
+                <h2>Liên kết tài khoản @Model.ProviderDisplayName của bạn</h2>
+                <hr />
+                <p class="register-text-info">
+                    Bạn đã xác thực thành công với <strong>@Model.ProviderDisplayName</strong>.
+                    Vui lòng nhập thông tin cần thiết và nhấn nút Đăng ký để hoàn tất đăng nhập.
+                </p>
+                <div asp-validation-summary="ModelOnly" class="register-text-danger" role="alert"></div>
+
+                <!-- Full Name -->
+                <div class="register-form-group">
+                    <label asp-for="Input.FullName" class="register-form-label">Họ và tên</label>
+                    <input asp-for="Input.FullName" class="register-form-control" autocomplete="fullname" aria-required="true" placeholder="Họ và tên" />
+                    <span asp-validation-for="Input.FullName" class="register-text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="register-form-group">
+                    <label asp-for="Input.Email" class="register-form-label">Email</label>
+                    <input asp-for="Input.Email" class="register-form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="register-text-danger"></span>
+                </div>                
+
+                <!-- Password-->
+                <div class="register-form-group">
+                    <label asp-for="Input.Password" class="register-form-label">Mật khẩu</label>
+                    <input asp-for="Input.Password" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
+                    <span asp-validation-for="Input.Password" class="register-text-danger"></span>
+                </div>
+                <div class="register-form-group">
+                    <label asp-for="Input.ConfirmPassword" class="register-form-label">Xác nhận mật khẩu</label>
+                    <input asp-for="Input.ConfirmPassword" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Xác nhận mật khẩu" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="register-text-danger"></span>
+                </div>
+
+                <!-- Role -->
+                <div class="register-form-group">
+                    <label asp-for="Input.Role" class="register-form-label">Vai trò</label>
+                    <select asp-for="Input.Role" asp-items="Model.Input.RoleList" class="register-form-control">
+                        <option disabled selected>--Chọn vai trò--</option>
+                    </select>                    
+                    <span asp-validation-for="Input.Role" class="register-text-danger"></span>
+                </div>
+
+                <button type="submit" class="register-btn register-btn-primary">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -37,5 +37,13 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Product>> SearchByNameAsync(string keyword)
+        {
+            return await _context.Products
+                                 .Include(p => p.Category)
+                                 .Where(p => p.Name.Contains(keyword))
+                                 .ToListAsync();
+        }
+
     }
 }

@@ -1,6 +1,33 @@
-﻿/* Register page specific styles */
+﻿/* Define root variables for red color scheme */
+:root {
+    --primary-color: #dc2626; /* Red tone for primary elements */
+    --primary-hover: #b91c1c; /* Darker red for hover */
+    --danger-color: #dc3545; /* Red for errors */
+    --accent-color: #ef4444; /* Slightly lighter red for focus */
+    --bg-primary: #ffffff; /* White background */
+    --text-primary: #1f2937; /* Dark text */
+    --text-light: #ffffff; /* White text for buttons */
+    --border-color: #d1d5db; /* Light gray border */
+    --primary-light: #fef2f2; /* Light red background for alerts */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Center the register container vertically and horizontally */
 .register-container {
-    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full viewport height */
+    max-width: 800px; /* Reduced from 1200px for smaller container */
     margin: var(--spacing-xl) auto;
     padding: 0 var(--spacing-md);
 }
@@ -9,7 +36,7 @@
         font-size: 1.75rem;
         font-weight: 700;
         margin-bottom: var(--spacing-lg);
-        color: var(--primary-color);
+        color: var(--primary-color); /* Red tone */
         text-align: center;
     }
 
@@ -17,18 +44,19 @@
     display: flex;
     gap: var(--spacing-lg);
     flex-wrap: wrap;
+    max-width: 500px; /* Reduced for smaller form */
 }
 
 .register-col-md-4 {
     flex: 1;
-    min-width: 300px;
-    max-width: 400px;
+    min-width: 280px; /* Slightly reduced */
+    max-width: 350px; /* Reduced for compact form */
 }
 
 .register-col-md-6 {
     flex: 1;
-    min-width: 300px;
-    max-width: 600px;
+    min-width: 280px;
+    max-width: 500px;
 }
 
 .register-col-md-offset-2 {
@@ -37,7 +65,7 @@
 
 .register-form, .register-form-horizontal {
     background-color: var(--bg-primary);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md); /* Reduced padding for smaller form */
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
 }
@@ -65,8 +93,8 @@
 
     .register-form-control:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        border-color: var(--primary-color); /* Red tone */
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); /* Red shadow */
     }
 
 .register-form-label {
@@ -77,15 +105,15 @@
 }
 
 .register-text-danger {
-    color: var(--danger-color);
+    color: var(--danger-color); /* Red tone */
     font-size: 0.75rem;
     margin-top: var(--spacing-xs);
     display: block;
 }
 
     .register-text-danger[role="alert"] {
-        background-color: var(--primary-light);
-        border: 1px solid var(--danger-color);
+        background-color: var(--primary-light); /* Light red */
+        border: 1px solid var(--danger-color); /* Red border */
         padding: var(--spacing-sm);
         border-radius: var(--radius-sm);
         margin-bottom: var(--spacing-lg);
@@ -98,9 +126,9 @@
         }
 
 .register-btn.register-btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); /* Red gradient */
     color: var(--text-light);
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md); /* Reduced padding for shorter buttons */
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: var(--radius-sm);
@@ -109,17 +137,22 @@
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
-    display: block;
+    display: flex; /* Use flex to align logo and text */
+    align-items: center;
+    justify-content: center;
+    min-width: 100px; /* Shortened button width */
+    width: 80%; /* Relative to form width */
+    margin: var(--spacing-md) auto; /* Equal spacing above and below */
 }
 
     .register-btn.register-btn-primary:hover {
-        background: var(--primary-hover);
+        background: var(--primary-hover); /* Darker red */
         transform: translateY(-2px);
         box-shadow: var(--shadow-md);
     }
 
     .register-btn.register-btn-primary:focus {
-        outline: 2px solid var(--accent-color);
+        outline: 2px solid var(--accent-color); /* Red focus outline */
         outline-offset: 2px;
     }
 
@@ -127,13 +160,44 @@
     margin-right: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
     display: inline-block;
-    min-width: 120px;
+    min-width: 100px; /* Shortened button width */
+}
+
+/* Google logo styling */
+.google-logo {
+    width: 18px;
+    height: 18px;
+    margin-right: var(--spacing-sm); /* Space between logo and text */
+}
+
+/* Divider section styling */
+.d-flex.justify-content-center.align-items-center {
+    margin: var(--spacing-md) 0; /* Equal spacing above and below to match buttons */
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.text-nowrap.text-muted {
+    color: #6c757d; /* Bootstrap muted text color */
+    font-size: 0.875rem;
+    padding: 0 var(--spacing-sm);
 }
 
 @media (max-width: 768px) {
     .register-container {
         margin: var(--spacing-md);
         padding: 0 var(--spacing-sm);
+        max-width: 100%;
+    }
+
+    .register-row {
+        max-width: 100%;
     }
 
     .register-col-md-4, .register-col-md-6 {
@@ -154,12 +218,5 @@
 
     .register-btn.register-btn-primary {
         padding: var(--spacing-sm);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .register-btn.register-btn-primary,
-    .register-form-control {
-        transition: none;
-    }
-}
+        min-width: 90px; /* Even shorter for mobile */
+        margin: constexpr System: * Today's date and time is 01:05 PM +07 on Friday, June 27, 2025.

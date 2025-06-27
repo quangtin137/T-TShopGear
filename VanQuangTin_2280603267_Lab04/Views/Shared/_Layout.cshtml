@@ -26,8 +26,8 @@
                     <span class="text-white">T&TShopGear</span>
                 </a>
                 <div class="d-flex">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" />
+                    <form class="d-flex" asp-controller="Product" asp-action="Search" method="get">
+                        <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" />
                         <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                     <div class="ms-3">
