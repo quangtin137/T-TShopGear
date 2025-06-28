@@ -17,5 +17,19 @@ namespace VanQuangTin_2280603267_Lab04.Models
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Ràng buộc: Không được xóa Category nếu còn Product tham chiếu đến
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict); // 👈 Đây là điểm quan trọng
+
+            // Bạn cũng có thể cấu hình các mối quan hệ khác ở đây nếu cần
+        }
     }
 }

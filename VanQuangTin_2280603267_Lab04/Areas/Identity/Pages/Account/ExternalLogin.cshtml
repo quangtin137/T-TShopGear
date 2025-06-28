@@ -35,19 +35,7 @@
                     <span asp-validation-for="Input.Email" class="register-text-danger"></span>
                 </div>                
 
-                <!-- Password-->
-                <div class="register-form-group">
-                    <label asp-for="Input.Password" class="register-form-label">Mật khẩu</label>
-                    <input asp-for="Input.Password" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
-                    <span asp-validation-for="Input.Password" class="register-text-danger"></span>
-                </div>
-                <div class="register-form-group">
-                    <label asp-for="Input.ConfirmPassword" class="register-form-label">Xác nhận mật khẩu</label>
-                    <input asp-for="Input.ConfirmPassword" class="register-form-control" autocomplete="new-password" aria-required="true" placeholder="Xác nhận mật khẩu" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="register-text-danger"></span>
-                </div>
-
-                <!-- Role -->
+                <!-- Role -->   
                 <div class="register-form-group">
                     <label asp-for="Input.Role" class="register-form-label">Vai trò</label>
                     <select asp-for="Input.Role" asp-items="Model.Input.RoleList" class="register-form-control">

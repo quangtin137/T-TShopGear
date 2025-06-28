@@ -35,5 +35,12 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Category?> GetByIdWithProductsAsync(int id)
+        {
+            return await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

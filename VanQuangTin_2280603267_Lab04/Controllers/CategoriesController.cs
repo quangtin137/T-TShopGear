@@ -82,8 +82,20 @@ namespace VanQuangTin_2280603267_Lab04.Controllers
 		[HttpPost, ActionName("Delete")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			await _categoryRepository.DeleteAsync(id);
-			return RedirectToAction(nameof(Index));
-		}
+            var category = await _categoryRepository.GetByIdWithProductsAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            if (category.Products != null && category.Products.Any())
+            {
+                ModelState.AddModelError("", "Không thể xóa danh mục vì có sản phẩm liên kết.");
+                return View("Delete", category); // Quay lại view Delete và hiển thị thông báo
+            }
+
+            await _categoryRepository.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 	}
 }
