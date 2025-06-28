@@ -25,7 +25,7 @@
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text text-danger fw-bold">Giá: @item.Price.ToString("N0")₫</p>
                         <p class="card-text">@item.Description</p>
-                        <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
+                        <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>    
 
                         <div class="mt-auto">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Sửa</a>
