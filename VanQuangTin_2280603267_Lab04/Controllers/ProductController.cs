@@ -116,5 +116,20 @@ namespace VanQuangTin_2280603267_Lab04.Controllers
             await _productRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Search(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                ViewBag.Keyword = "";
+                return View(new List<Product>());
+            }
+
+            var results = await _productRepository.SearchByNameAsync(keyword);
+            ViewBag.Keyword = keyword;
+
+            return View(results);
+        }
+
     }
 }

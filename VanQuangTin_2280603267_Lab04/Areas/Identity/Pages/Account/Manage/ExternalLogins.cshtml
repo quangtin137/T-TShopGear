@@ -45,19 +45,7 @@
             <p>
                 @foreach (var provider in Model.OtherLogins)
                 {
-                    if (provider.Name == "Google")
-                    {
-                        <button class="btn btn-outline-danger mb-2" name="provider" value="@provider.Name">
-                            <img src="https://developers.google.com/identity/images/g-logo.png" width="20" style="margin-right:8px" />
-                            Đăng nhập bằng Google
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-outline-primary mb-2" name="provider" value="@provider.Name">
-                            @provider.DisplayName
-                        </button>
-                    }
+                    <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
                 }
             </p>
         </div>
