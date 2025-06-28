@@ -64,7 +64,7 @@ else
                 </tr>
                 <tr>
                     <td colspan="3" class="text-end text-success"><strong>Thành tiền:</strong></td>
-                    <td colspan="2"><strong>@Model.GetFinalTotal().ToString("N0") ₫</strong></td>
+                    <td colspan="2"><strong>@Model.GetFinalTotal() ₫</strong></td>
                 </tr>
             </tfoot>
         </table>
@@ -72,6 +72,19 @@ else
         <div class="mt-4">
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Tiếp tục mua sắm</a>
             <a asp-action="Checkout" class="btn btn-success">Thanh toán</a>
+            <td>
+            <form method="post" asp-action="CreatePaymentUrl" asp-controller="Payment">
+                <input type="hidden" name="OrderId" value="@Guid.NewGuid().ToString()" />
+                <input type="hidden" name="FullName" value="GearShop" />
+                <input type="hidden" name="Amount" value="@Model.GetFinalTotal()" />
+                <input type="hidden" name="OrderInfomation" value="Thanh toán đặt hàng qua Momo tại GearShop" />
+                <br/>
+                <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button>
+            </form>
+
+            </td>
+            
         </div>
 }
+
 
