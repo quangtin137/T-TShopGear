@@ -28,7 +28,6 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
         }
         public async Task UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteAsync(int id)

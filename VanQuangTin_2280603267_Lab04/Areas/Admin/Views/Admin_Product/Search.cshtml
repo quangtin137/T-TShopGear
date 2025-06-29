@@ -27,19 +27,17 @@
             @foreach (var item in Model)
             {
                 <div class="product-card">
-                    <img src="@item.ImageUrl" alt="@item.Name" class="product-card-img" />
+                    <img src="@item.ImageUrl" class="product-card-img" alt="@item.Name" />
                     <div class="product-card-body">
                         <h5 class="product-card-title">@item.Name</h5>
                         <div class="product-card-divider"></div>
                         <p class="product-card-price">@((item.Price * 1000).ToString("#,##0")) ₫</p>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
                         <div class="product-card-actions">
-                            <a asp-controller="ShoppingCart"
-                               asp-action="AddToCart"
-                               asp-route-productId="@item.Id"
-                               asp-route-quantity="@numOfQuantity"
-                               class="product-btn product-btn-primary">
-                                <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ hàng
-                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="product-btn product-btn-primary">Sửa</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="product-btn product-btn-primary">Chi tiết</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="product-btn product-btn-primary">Xóa</a>
                         </div>
                     </div>
                 </div>

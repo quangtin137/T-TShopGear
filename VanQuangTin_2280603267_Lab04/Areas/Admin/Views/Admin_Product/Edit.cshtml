@@ -12,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -30,14 +30,30 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <div class="form-group mb-3">
+                <label asp-for="ImageUrl" class="control-label">Hình ảnh sản phẩm</label>
+
+                <!-- Ảnh hiện tại -->
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="mb-2">
+                        <img id="previewImage"
+                             src="@Model.ImageUrl"
+                             alt="Hình ảnh sản phẩm hiện tại"
+                             class="img-fluid"
+                             style="max-width: 100%; width: 200px; border: 1px solid #ccc;" />
+                    </div>
+                }
+
+                <!-- Chọn ảnh mới -->
+                <input type="file" name="imageUrl" class="form-control" id="imageInput" accept="image/*" aria-describedby="imageHelp" />
+                <small id="imageHelp" class="form-text text-muted">Chọn file hình ảnh để thay thế ảnh hiện tại.</small>
+                <span class="text-danger" data-valmsg-for="imageUrl"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,4 +69,21 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
+        if (imageInput && previewImage) {
+            imageInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    </script>
 }
