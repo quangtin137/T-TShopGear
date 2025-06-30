@@ -1,39 +1,179 @@
 ﻿@model IEnumerable<VanQuangTin_2280603267_Lab04.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Product List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var sortOrder = Context.Request.Query["sortOrder"].ToString();
+    var selectedRanges = Context.Request.Method == "POST"
+    ? Context.Request.Form["priceRange"]
+    : Context.Request.Query["priceRange"];
+
+    var allRanges = new[] {
+        "0-500000",
+        "500000-5000000",
+        "5000000-15000000",
+        "15000000-30000000",
+        "30000000-999999999"
+    };
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@functions {
+    string BuildUrl(int page, string sortOrder, IEnumerable<string> priceRanges)
+    {
+        var query = $"?page={page}";
+
+        if (!string.IsNullOrEmpty(sortOrder))
+            query += $"&sortOrder={sortOrder}";
+
+        if (priceRanges != null)
+        {
+            foreach (var r in priceRanges)
+            {
+                query += $"&priceRange={r}";
+            }
+        }
+
+        return Url.Action("Index", "Product", new { area = "Admin" }) + query;
+    }
+}
 
 @section Styles {
-        <link rel="stylesheet" href="~/css/product-index.css" />
+    <link rel="stylesheet" href="~/css/product-index.css" />
 }
 
-<div class="product-index-container">
-    <h1 class="product-index-title">Product List</h1>
-    <p>
-        <a class="product-btn product-btn-primary mb-3" asp-action="Create">Thêm sản phẩm mới</a>
-    </p>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Bộ lọc giá -->
+        <div class="col-md-3">
+            <form method="post" asp-action="Filter" asp-controller="Product" asp-area="Admin" id="filterForm">
+                <div class="card p-3">
+                    <h5 class="mb-3">Lọc Giá</h5>
 
-    <div class="product-index-grid">
-        @foreach (var item in Model)
-        {
-            <div class="product-card">
-                <img src="@item.ImageUrl" class="product-card-img" alt="@item.Name" />
-                <div class="product-card-body">
-                    <h5 class="product-card-title">@item.Name</h5>
-                    <div class="product-card-divider"></div>
-                    <p class="product-card-price">@((item.Price * 1000).ToString("#,##0")) ₫</p>
-                    <p class="card-text">@item.Description</p>
-                    <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
-                    <div class="product-card-actions">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="product-btn product-btn-primary">Sửa</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="product-btn product-btn-primary">Chi tiết</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="product-btn product-btn-primary">Xóa</a>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="priceRange" value="all"
+                               onchange="document.getElementById('filterForm').submit()"
+                               @(selectedRanges.Contains("all") ? "checked" : "") />
+                        <label class="form-check-label">Tất Cả</label>
                     </div>
+
+                    @foreach (var range in allRanges)
+                    {
+                        var label = range switch
+                        {
+                            "0-500000" => "Dưới 500,000₫",
+                            "500000-5000000" => "500,000₫ - 5,000,000₫",
+                            "5000000-15000000" => "5,000,000₫ - 15,000,000₫",
+                            "15000000-30000000" => "15,000,000₫ - 30,000,000₫",
+                            "30000000-999999999" => "Trên 30,000,000₫",
+                            _ => ""
+                        };
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="priceRange" value="@range"
+                                   onchange="document.getElementById('filterForm').submit()"
+                            @(selectedRanges.Contains(range) ? "checked" : "") />
+                            <label class="form-check-label">@label</label>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(sortOrder))
+                    {
+                        <input type="hidden" name="sortOrder" value="@sortOrder" />
+                    }
+                </div>
+            </form>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="col-md-9">
+            <h1 class="product-index-title">Product List</h1>
+            <p>
+                <a class="product-btn product-btn-primary mb-3" asp-action="Create">Thêm sản phẩm mới</a>
+            </p>
+
+            <div class="sort-filter-container mb-4">
+                <form method="post" asp-action="Sort" asp-controller="Product" asp-area="Admin" class="row">
+                    <div class="col-md-4">
+                        <label for="sortOrder">Sắp xếp:</label>
+                        <select name="sortOrder" class="form-select" onchange="this.form.submit()">
+                            <option value="">-- Chọn --</option>
+                            <option value="price_asc" selected="@(sortOrder == "price_asc")">Giá tăng dần</option>
+                            <option value="price_desc" selected="@(sortOrder == "price_desc")">Giá giảm dần</option>
+                            <option value="name_asc" selected="@(sortOrder == "name_asc")">Tên A → Z</option>
+                            <option value="name_desc" selected="@(sortOrder == "name_desc")">Tên Z → A</option>
+                        </select>
+
+                        @foreach (var range in selectedRanges)
+                        {
+                            <input type="hidden" name="priceRange" value="@range" />
+                        }
+                    </div>
+                </form>
+            </div>
+
+            <div class="product-index-grid">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col">
+                            <div class="product-card">
+                                <img src="@item.ImageUrl" class="product-card-img" alt="@item.Name" />
+                                <div class="product-card-body">
+                                    <h5 class="product-card-title">@item.Name</h5>
+                                    <div class="product-card-divider"></div>
+                                    <p class="product-card-price">@((item.Price * 1000).ToString("#,##0")) ₫</p>
+                                    <p class="card-text">@item.Description</p>
+                                    <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
+                                    <div class="product-card-actions">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="product-btn product-btn-edit">Sửa</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="product-btn product-btn-details">Chi tiết</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="product-btn product-btn-delete">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        }
+
+            <!-- Phân trang -->
+            <div class="d-flex justify-content-center mt-4">
+                <nav>
+                    <ul class="pagination">
+                        @if (ViewBag.TotalPages != null)
+                        {
+                            int currentPage = ViewBag.CurrentPage ?? 1;
+                            int totalPages = ViewBag.TotalPages;
+
+                            if (currentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@BuildUrl(currentPage - 1, sortOrder, selectedRanges)" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            }
+
+                            for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == currentPage ? "active" : "")">
+                                    <a class="page-link" href="@BuildUrl(i, sortOrder, selectedRanges)">@i</a>
+                                </li>
+                            }
+
+                            if (currentPage < totalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@BuildUrl(currentPage + 1, sortOrder, selectedRanges)" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>

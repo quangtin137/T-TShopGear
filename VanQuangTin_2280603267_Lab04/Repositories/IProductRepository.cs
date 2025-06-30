@@ -4,6 +4,7 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
 {
     public interface IProductRepository
     {
+        IQueryable<Product> GetAll();
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(int id);
         Task AddAsync(Product product);
