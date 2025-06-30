@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<VanQuangTin_2280603267_Lab04.Models.Product>
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Product List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var sortOrder = Context.Request.Query["sortOrder"].ToString();
+    var sortOrder = Context.Request.Method == "POST"
+        ? Context.Request.Form["sortOrder"].ToString()
+        : Context.Request.Query["sortOrder"].ToString();
+
     var selectedRanges = Context.Request.Method == "POST"
-    ? Context.Request.Form["priceRange"]
-    : Context.Request.Query["priceRange"];
+        ? Context.Request.Form["priceRange"]
+        : Context.Request.Query["priceRange"];
 
     var allRanges = new[] {
         "0-500000",
@@ -34,7 +37,7 @@
             }
         }
 
-        return Url.Action("Index", "Product", new { area = "Admin" }) + query;
+        return Url.Action("Index", "Admin_Product", new { area = "Admin" }) + query;
     }
 }
 
@@ -46,7 +49,7 @@
     <div class="row">
         <!-- Bộ lọc giá -->
         <div class="col-md-3">
-            <form method="post" asp-action="Filter" asp-controller="Product" asp-area="Admin" id="filterForm">
+            <form method="post" asp-action="Filter" asp-controller="Admin_Product" asp-area="Admin" id="filterForm">
                 <div class="card p-3">
                     <h5 class="mb-3">Lọc Giá</h5>
 
@@ -93,7 +96,7 @@
             </p>
 
             <div class="sort-filter-container mb-4">
-                <form method="post" asp-action="Sort" asp-controller="Product" asp-area="Admin" class="row">
+                <form method="post" asp-action="Sort" asp-controller="Admin_Product" asp-area="Admin" class="row">
                     <div class="col-md-4">
                         <label for="sortOrder">Sắp xếp:</label>
                         <select name="sortOrder" class="form-select" onchange="this.form.submit()">
