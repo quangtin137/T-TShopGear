@@ -18,10 +18,16 @@ namespace GearShop.Controllers
         }
 
         [HttpPost]
-      
         public async Task<IActionResult> CreatePaymentUrl(OrderInfoModel model)
         {
             var response = await _momoService.CreatePaymentAsync(model);
+
+            if (response == null || string.IsNullOrEmpty(response.PayUrl))
+            {
+                TempData["error"] = "Không thể tạo URL thanh toán. Vui lòng thử lại.";
+                return RedirectToAction("Checkout", "ShoppingCart"); // hoặc một trang phù hợp
+            }
+
             return Redirect(response.PayUrl);
         }
 
