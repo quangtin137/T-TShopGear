@@ -1,47 +1,85 @@
-﻿/* Checkout page specific styles */
+﻿/* Checkout page specific styles with enhanced Layout.css styling */
 .checkout-container {
     max-width: 600px;
     margin: var(--spacing-xl) auto;
     padding: var(--spacing-lg);
-    background-color: var(--bg-primary);
-    box-shadow: var(--shadow-md);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
     border-radius: var(--radius-md);
+    backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1s ease forwards;
 }
 
+    .checkout-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: shimmer 3s infinite;
+    }
+
     .checkout-container h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: var(--text-2xl);
+        font-weight: 800;
         margin: var(--spacing-lg) 0;
         text-align: center;
         color: var(--primary-color);
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
+
+        .checkout-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: translateX(-50%);
+            border-radius: var(--radius-full);
+        }
 
 .checkout-form-group {
     margin-bottom: var(--spacing-lg);
+    position: relative;
 }
 
     .checkout-form-group label {
         display: block;
-        font-size: 0.875rem;
+        font-size: var(--text-sm);
         font-weight: 600;
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-xs);
         color: var(--text-primary);
+        transition: color var(--transition-base);
     }
 
 .checkout-form-control {
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.875rem;
-    border: 1px solid var(--border-color);
+    font-size: var(--text-sm);
+    border: 2px solid var(--border-light);
     border-radius: var(--radius-sm);
     box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--bg-glass);
+    color: var(--text-primary);
+    backdrop-filter: blur(15px) saturate(180%);
+    transition: all var(--transition-smooth);
+    box-shadow: var(--shadow-inner);
 }
 
     .checkout-form-control:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); /* Using --primary-color in rgba */
+        box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15), var(--shadow-glow);
+        transform: translateY(-1px);
     }
 
 textarea.checkout-form-control {
@@ -51,17 +89,19 @@ textarea.checkout-form-control {
 
 .checkout-text-danger {
     color: var(--danger-color);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     margin-top: var(--spacing-xs);
     display: block;
+    animation: fadeIn 0.6s ease forwards;
 }
 
     .checkout-text-danger.validation-summary-errors {
-        background-color: var(--primary-light);
+        background: var(--primary-light);
         border: 1px solid var(--danger-color);
         padding: var(--spacing-sm);
         border-radius: var(--radius-sm);
         margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
     }
 
         .checkout-text-danger.validation-summary-errors ul {
@@ -74,21 +114,42 @@ textarea.checkout-form-control {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
     color: var(--text-light);
     padding: var(--spacing-sm) var(--spacing-lg);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: 700;
     border-radius: var(--radius-sm);
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-bounce);
     width: 100%;
     text-align: center;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
 }
+
+    .checkout-btn.checkout-btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, var(--primary-light), transparent);
+        transition: all var(--transition-slow);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .checkout-btn.checkout-btn-primary:hover::before {
+        width: 300px;
+        height: 300px;
+    }
 
     .checkout-btn.checkout-btn-primary:hover {
         background: var(--primary-hover);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: var(--shadow-xl), var(--shadow-glow);
     }
 
     .checkout-btn.checkout-btn-primary:focus {
@@ -103,7 +164,7 @@ textarea.checkout-form-control {
     }
 
         .checkout-container h2 {
-            font-size: 1.25rem;
+            font-size: var(--text-xl);
         }
 
     .checkout-btn.checkout-btn-primary {
@@ -115,5 +176,27 @@ textarea.checkout-form-control {
     .checkout-btn.checkout-btn-primary,
     .checkout-form-control {
         transition: none;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

@@ -8,11 +8,11 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/product-index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/search.css" asp-append-version="true" />
 }
 
-<div class="product-index-container">
-    <h2 class="product-index-title">
+<div class="search-container">
+    <h2 class="search-title">
         Kết quả tìm kiếm cho:
         <span class="text-danger">"@keyword"</span>
     </h2>
@@ -23,21 +23,21 @@
     }
     else
     {
-        <div class="product-index-grid">
+        <div class="search-grid">
             @foreach (var item in Model)
             {
-                <div class="product-card">
-                    <img src="@item.ImageUrl" class="product-card-img" alt="@item.Name" />
-                    <div class="product-card-body">
-                        <h5 class="product-card-title">@item.Name</h5>
-                        <div class="product-card-divider"></div>
-                        <p class="product-card-price">@((item.Price * 1000).ToString("#,##0")) ₫</p>
+                <div class="search-card">
+                    <img src="@item.ImageUrl" class="search-card-img" alt="@item.Name" />
+                    <div class="search-card-body">
+                        <h5 class="search-card-title">@item.Name</h5>
+                        <div class="search-card-divider"></div>
+                        <p class="search-card-price">@((item.Price * 1000).ToString("#,##0")) ₫</p>
                         <p class="card-text">@item.Description</p>
                         <p class="card-text"><strong>Loại:</strong> @item.Category?.Name</p>
-                        <div class="product-card-actions">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="product-btn product-btn-primary">Sửa</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="product-btn product-btn-primary">Chi tiết</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="product-btn product-btn-primary">Xóa</a>
+                        <div class="search-card-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="search-btn search-btn-primary">Sửa</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="search-btn search-btn-details">Chi tiết</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="search-btn search-btn-secondary">Xóa</a>
                         </div>
                     </div>
                 </div>
