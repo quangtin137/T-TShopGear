@@ -4,32 +4,42 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/CategoryCreate.css" />
+}
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h1>Create</h1>
+<h1>Create New Category</h1>
 
-<h4>Category</h4>
+<h4>Category Details</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="category-create-container" role="region" aria-labelledby="create-category-heading">
+    <div class="category-create-row">
+        <div class="category-create-col-md-4">
+            <form asp-action="Create" class="category-create-form" novalidate>
+                <div asp-validation-summary="ModelOnly" class="category-create-text-danger validation-summary-errors" role="alert"></div>
+                <div class="category-create-form-group">
+                    <label asp-for="Name" class="category-create-control-label">Category Name</label>
+                    <input asp-for="Name" class="category-create-form-control" aria-required="true" placeholder="Enter category name" />
+                    <span asp-validation-for="Name" class="category-create-text-danger"></span>
+                </div>
+                <div class="category-create-form-group category-create-button-group">
+                    <input type="submit" value="Create" class="category-create-btn-primary" />
+                    <a asp-action="Index" class="category-create-btn-secondary" role="button">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="category-create-back-link" aria-label="Return to category list">Back to List</a>
 </div>
 
-@section Scripts {      
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

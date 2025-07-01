@@ -33,7 +33,21 @@
                     <label asp-for="Input.Email" class="register-form-label">Email</label>
                     <input asp-for="Input.Email" class="register-form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
                     <span asp-validation-for="Input.Email" class="register-text-danger"></span>
-                </div>                
+                </div>
+
+                <!-- Password -->
+                <div class="register-form-group">
+                    <label asp-for="Input.Password" class="register-form-label">Mật khẩu</label>
+                    <input asp-for="Input.Password" class="register-form-control" type="password" placeholder="Nhập mật khẩu" />
+                    <span asp-validation-for="Input.Password" class="register-text-danger"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="register-form-group">
+                    <label asp-for="Input.ConfirmPassword" class="register-form-label">Xác nhận mật khẩu</label>
+                    <input asp-for="Input.ConfirmPassword" class="register-form-control" type="password" placeholder="Nhập lại mật khẩu" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="register-text-danger"></span>
+                </div>
 
                 <!-- Role -->   
                 <div class="register-form-group">
