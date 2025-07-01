@@ -40,34 +40,22 @@ namespace VanQuangTin_2280603267_Lab04.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateStatus(int id, Order order)
+        public async Task<IActionResult> UpdateStatus(int orderId, string newStatus)
         {
-            if (id != order.Id)
-                return NotFound();
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) return NotFound();
 
-            var orderInDb = await _context.Orders.FindAsync(id);
-            if (orderInDb == null)
-                return NotFound();
-
-            // Cập nhật trạng thái duy nhất
-            orderInDb.Status = order.Status;
-
-            try
+            if (Enum.TryParse(newStatus, out OrderStatus parsedStatus))
             {
+                order.Status = parsedStatus;
+                _context.Update(order);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Orders.Any(o => o.Id == id))
-                    return NotFound();
-                else
-                    throw;
-            }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-        
+
+
     }
 }
 
