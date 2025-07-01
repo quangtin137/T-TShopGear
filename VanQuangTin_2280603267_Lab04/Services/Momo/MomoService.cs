@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace ProGCoder_MomoAPI.Services;
+namespace GearShop.Services.Momo;
 
 public class MomoService : IMomoService
 {

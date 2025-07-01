@@ -1,0 +1,34 @@
+﻿@model IEnumerable<VanQuangTin_2280603267_Lab04.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userRoles = ViewBag.UserRoles as Dictionary<string, string>;
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>👤 Danh sách người dùng</h2>
+
+<a asp-action="Create" class="btn btn-primary">➕ Thêm người dùng</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>@(userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : "Chưa có")</td>
+            </tr>
+        }
+    </tbody>
+</table>
