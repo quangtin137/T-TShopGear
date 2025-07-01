@@ -1,30 +1,70 @@
 ﻿@model IEnumerable<Order>
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Đơn hàng của tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h2>Đơn hàng của tôi</h2>
-<table class="table">
-    <tr>
-        <th>Mã đơn</th>
-        <th>Ngày đặt</th>
-        <th>Trạng thái</th>
-        <th>Hành động</th>
-    </tr>
-    @foreach (var o in Model)
-    {
-        <tr>
-            <td>@o.Id</td>
-            <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
-            <td>@o.Status</td>
-            <td>
-                @if (o.Status == OrderStatus.Pending)
-                {
-                    <a asp-action="Cancel" asp-route-id="@o.Id">Hủy</a>
-                }
-            </td>
-        </tr>
-    }
-</table>
+<h2 class="my-4">🧾 Đơn hàng của tôi</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Bạn chưa có đơn hàng nào.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Mã đơn</th>
+                <th scope="col">Ngày đặt</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @switch (o.Status)
+                        {
+                            case OrderStatus.Pending:
+                                <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                                break;
+                            case OrderStatus.Processing:
+                                <span class="badge bg-primary">Đang xử lý</span>
+                                break;
+                            case OrderStatus.Shipped:
+                                <span class="badge bg-info text-dark">Đang giao</span>
+                                break;
+                            case OrderStatus.Cancelled:
+                                <span class="badge bg-danger">Đã hủy</span>
+                                break;
+                            default:
+                                <span class="badge bg-secondary">@o.Status</span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        @if (o.Status == OrderStatus.Pending)
+                        {
+                            <a asp-action="Cancel" asp-route-id="@o.Id"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Bạn có chắc chắn muốn hủy đơn này?');">
+                                Hủy đơn
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Không khả dụng</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

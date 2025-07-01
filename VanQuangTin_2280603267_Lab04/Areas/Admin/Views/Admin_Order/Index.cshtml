@@ -1,76 +1,61 @@
 ﻿@model IEnumerable<VanQuangTin_2280603267_Lab04.Models.Order>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách đơn hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var statusList = Enum.GetValues(typeof(VanQuangTin_2280603267_Lab04.Models.OrderStatus))
+                        .Cast<VanQuangTin_2280603267_Lab04.Models.OrderStatus>()
+                        .Select(s => new SelectListItem { Text = s.ToString(), Value = s.ToString() })
+                        .ToList();
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Index</h1>
 
+<h2 class="mb-4">📦 Danh sách đơn hàng</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-hover table-striped align-middle">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinalAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShippingAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
-            <th></th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái</th>
+            <th>Tổng tiền</th>
+            <th>Giảm giá</th>
+            <th>Thành tiền</th>
+            <th>Địa chỉ giao hàng</th>
+            <th>Ghi chú</th>
+            <th>Người dùng</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippingAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <form asp-action="UpdateStatus" asp-controller="Admin_Order" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="orderId" value="@item.Id" />
+                        <select name="newStatus" class="form-select form-select-sm me-2">
+                            @foreach (var status in statusList)
+                            {
+                                <option value="@status.Value" selected="@(status.Value == item.Status.ToString() ? "selected" : null)">
+                                    @status.Text
+                                </option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-success">Lưu</button>
+                    </form>
+                </td>
+                <td>@item.TotalPrice.ToString("N0") đ</td>
+                <td>@item.Discount.ToString("N0") đ</td>
+                <td>@item.FinalAmount.ToString("N0") đ</td>
+                <td>@item.ShippingAddress</td>
+                <td>@item.Notes</td>
+                <td>@item.ApplicationUser?.FullName ?? "Không rõ"</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Chi tiết</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xoá</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,17 +1,37 @@
 ﻿@using VanQuangTin_2280603267_Lab04.Models
-
 @inject SignInManager<ApplicationUser> SignInManager
+
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action @ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">
+         Hồ sơ
+    </a>
+    <a class="list-group-item list-group-item-action @ManageNavPages.EmailNavClass(ViewContext)" asp-page="./Email">
+         Email
+    </a>
+    <a class="list-group-item list-group-item-action @ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword">
+         Đổi mật khẩu
+    </a>
     @if (hasExternalLogins)
     {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+        <a class="list-group-item list-group-item-action @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">
+             Đăng nhập ngoài
+        </a>
     }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+    <a class="list-group-item list-group-item-action @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-page="./TwoFactorAuthentication">
+         Xác thực 2 bước
+    </a>
+    <a class="list-group-item list-group-item-action @ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">
+         Dữ liệu cá nhân
+    </a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="list-group-item list-group-item-action" asp-area="Admin" asp-controller="Admin_Manage" asp-action="Dashboard">
+             Quản trị
+        </a>
+    }
+</div>
