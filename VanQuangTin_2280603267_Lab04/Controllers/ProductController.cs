@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Drawing.Printing;
 using VanQuangTin_2280603267_Lab04.Models;
 using VanQuangTin_2280603267_Lab04.Repositories;
 
@@ -18,12 +19,53 @@ namespace VanQuangTin_2280603267_Lab04.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string sortOrder, string priceRange, int page = 1, int pageSize = 12)
         {
-            var products = await _productRepository.GetAllAsync();
-            return View(products);
+            var products = _productRepository.GetAll(); // IQueryable
+
+            // Lọc theo khoảng giá
+            if (!string.IsNullOrEmpty(priceRange) && priceRange != "all")
+            {
+                var range = priceRange.Split('-');
+                if (range.Length == 2 &&
+                    int.TryParse(range[0], out int minPrice) &&
+                    int.TryParse(range[1], out int maxPrice))
+                {
+                    products = products.Where(p => p.Price * 1000 >= minPrice && p.Price * 1000 <= maxPrice);
+                }
+            }
+
+            // Sắp xếp theo giá
+            products = sortOrder switch
+            {
+                "asc" => products.OrderBy(p => p.Price),
+                "desc" => products.OrderByDescending(p => p.Price),
+                _ => products
+            };
+
+            // Tổng số sản phẩm
+            int totalItems = products.Count();
+
+            // Tính số trang và đảm bảo luôn ≥ 1
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            ViewBag.TotalPages = totalPages > 0 ? totalPages : 1;
+
+            // Phân trang
+            var pagedProducts = products
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.PriceRange = priceRange;
+
+            return View(pagedProducts);
         }
-        
+
+
+
+
         public async Task<IActionResult> Create()
         {
             var categories = await _categoryRepository.GetAllAsync();

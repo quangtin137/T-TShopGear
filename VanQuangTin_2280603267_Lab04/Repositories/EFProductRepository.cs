@@ -43,6 +43,9 @@ namespace VanQuangTin_2280603267_Lab04.Repositories
                                  .Where(p => p.Name.Contains(keyword))
                                  .ToListAsync();
         }
-
+        public IQueryable<Product> GetAll()
+        {
+            return _context.Products.Include(p => p.Category);
+        }
     }
 }
