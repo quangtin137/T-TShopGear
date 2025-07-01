@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "Hướng dẫn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ===== GUIDE PAGE STYLES ===== */
+    .guide-container {
+        max-width: 1200px;
+        margin: var(--spacing-2xl) auto;
+        padding: var(--spacing-xl) var(--spacing-lg);
+        background: var(--bg-card);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(10px) saturate(180%);
+        border: 1px solid var(--border-light);
+        animation: fadeIn 1s ease forwards;
+    }
+
+    .guide-container h1 {
+        font-size: var(--text-3xl);
+        font-weight: 800;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: var(--spacing-2xl);
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .guide-container h1::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        transform: translateX(-50%);
+        border-radius: var(--radius-full);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .guide-section {
+        margin-bottom: var(--spacing-2xl);
+        padding: var(--spacing-lg);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-smooth);
+        border: 1px solid var(--border-color);
+        animation: slideUp 0.8s ease forwards;
+    }
+
+    .guide-section:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl), var(--shadow-glow);
+        border-color: var(--primary-light);
+    }
+
+    .guide-section h2 {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-lg);
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+    }
+
+    .guide-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        border-radius: var(--radius-full);
+        box-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+    }
+
+    .guide-section h4 {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: var(--spacing-md) 0 var(--spacing-sm);
+    }
+
+    .guide-section p {
+        font-size: var(--text-base);
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-md);
+        line-height: 1.8;
+    }
+
+    .guide-section ul, .guide-section ol {
+        margin-bottom: var(--spacing-md);
+        padding-left: var(--spacing-xl);
+    }
+
+    .guide-section li {
+        font-size: var(--text-base);
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-sm);
+        position: relative;
+        transition: all var(--transition-base);
+        padding-left: var(--spacing-md);
+    }
+
+    .guide-section li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        background: var(--primary-color);
+        border-radius: var(--radius-full);
+        transform: translateY(-50%);
+        transition: all var(--transition-base);
+    }
+
+    .guide-section li:hover {
+        color: var(--primary-color);
+        transform: translateX(4px);
+    }
+
+    .guide-section li:hover::before {
+        background: var(--accent-color);
+        width: 8px;
+        height: 8px;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .guide-section a {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        transition: all var(--transition-smooth);
+    }
+
+    .guide-section a::before {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        transition: width var(--transition-base);
+    }
+
+    .guide-section a:hover {
+        color: var(--accent-hover);
+    }
+
+    .guide-section a:hover::before {
+        width: 100%;
+    }
+</style>
+
+<div class="guide-container">
+    <h1>HƯỚNG DẪN</h1>
+
+    <section class="guide-section">
+        <h2>1. Hướng dẫn thanh toán</h2>
+        <p>Chúng tôi cung cấp nhiều hình thức thanh toán linh hoạt để khách hàng dễ dàng chọn lựa:</p>
+        <ul>
+            <li><strong>Thanh toán khi nhận hàng (COD):</strong> Kiểm tra sản phẩm trước khi thanh toán tại nhà.</li>
+            <li><strong>Chuyển khoản ngân hàng:</strong> Thông tin tài khoản ngân hàng sẽ được hiển thị khi đặt hàng.</li>
+            <li><strong>Thanh toán online:</strong> Hỗ trợ các cổng thanh toán như VNPAY, MOMO, ZaloPay,...</li>
+            <li><strong>Thanh toán tại cửa hàng:</strong> Quý khách có thể đến showroom để thanh toán trực tiếp bằng tiền mặt hoặc quẹt thẻ.</li>
+        </ul>
+    </section>
+
+    <section class="guide-section">
+        <h2>2. Hướng dẫn đặt hàng</h2>
+        <p>Quy trình đặt hàng tại cửa hàng điện tử của chúng tôi rất đơn giản:</p>
+        <ol>
+            <li>Truy cập vào trang chi tiết sản phẩm bạn muốn mua.</li>
+            <li>Chọn số lượng, cấu hình (nếu có) và nhấn nút <strong>"Thêm vào giỏ hàng"</strong>.</li>
+            <li>Chuyển đến <strong>Giỏ hàng</strong> và nhấn <strong>"Tiến hành thanh toán"</strong>.</li>
+            <li>Nhập đầy đủ thông tin giao hàng và chọn phương thức thanh toán.</li>
+            <li>Nhấn <strong>"Xác nhận đơn hàng"</strong>.</li>
+        </ol>
+        <p>Đơn hàng của bạn sẽ được xử lý và giao nhanh chóng trong vòng 1–3 ngày làm việc.</p>
+    </section>
+
+    <section class="guide-section">
+        <h2>3. Hướng dẫn trả góp</h2>
+        <p>Chúng tôi hỗ trợ trả góp linh hoạt cho các đơn hàng từ 3.000.000 VNĐ trở lên.</p>
+        <h4>1. Điều kiện:</h4>
+        <ul>
+            <li>Khách hàng từ 18 tuổi trở lên, có CCCD/CMND còn hiệu lực.</li>
+            <li>Thu nhập ổn định hoặc có người bảo lãnh.</li>
+        </ul>
+        <h4>2. Hình thức trả góp:</h4>
+        <ul>
+            <li><strong>Trả góp qua thẻ tín dụng:</strong> Hỗ trợ nhiều ngân hàng như Vietcombank, BIDV, TPBank,...</li>
+            <li><strong>Trả góp qua công ty tài chính:</strong> FeCredit, HomeCredit,... thủ tục đơn giản, duyệt nhanh.</li>
+        </ul>
+        <p>Quý khách có thể chọn phương thức trả góp khi đặt hàng, hệ thống sẽ hướng dẫn cụ thể từng bước.</p>
+    </section>
+
+    <section class="guide-section">
+        <h2>4. Tuyển dụng</h2>
+        <p>Chúng tôi luôn chào đón các ứng viên đam mê công nghệ, có tinh thần cầu tiến và trách nhiệm cao.</p>
+        <h4>Vị trí đang tuyển:</h4>
+        <ul>
+            <li>Nhân viên kinh doanh – showroom PC, gear, gaming</li>
+            <li>Kỹ thuật viên lắp ráp và bảo trì máy tính</li>
+            <li>Nhân viên kho – vận chuyển</li>
+            <li>Nhân viên chăm sóc khách hàng</li>
+            <li>Lập trình viên backend ASP.NET Core (nếu bạn muốn tham gia luôn 😄)</li>
+        </ul>
+        <h4>Cách ứng tuyển:</h4>
+        <p>Gửi CV đến email: <a href="mailto:tuyendung@dienmaytech.vn">tuyendung@dienmaytech.vn</a> hoặc liên hệ qua hotline: <a href="tel:19009999">1900 9999</a>.</p>
+        <p>Chúng tôi sẽ phản hồi trong vòng 3 ngày làm việc.</p>
+    </section>
+</div>
