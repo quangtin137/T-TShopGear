@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // hoặc layout admin của bạn
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>📋 Quản trị hệ thống</h1>
+
+<div class="admin-menu">
+    <a class="btn btn-primary" asp-action="Dashboard" asp-controller="Admin_Manage">📊 Thống kê</a>
+    <a class="btn btn-success" asp-controller="Admin_Product" asp-action="Index">📦 Quản lý sản phẩm</a>
+    <a class="btn btn-warning" asp-controller="Admin_Order" asp-action="Index">🧾 Quản lý đơn hàng</a>
+    <a class="btn btn-info" asp-controller="Admin_User" asp-action="Index">👤 Quản lý người dùng</a>
+    <a class="btn btn-dark" asp-controller="Admin_Setting" asp-action="Index">⚙️ Cài đặt</a>
+</div>
+
+<style>
+    .admin-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+        .admin-menu a {
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+</style>
